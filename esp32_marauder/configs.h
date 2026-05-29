@@ -67,10 +67,10 @@
   //// BOARD FEATURES
   #ifdef GENERIC_ESP32
     #define HAS_BT
-    #define HAS_BUTTONS          // AKTIF! Fitur 4 tombol lu
+    #define HAS_BUTTONS          // AKTIF! Fitur 4 tombol navigasi lu
     #define HAS_SCREEN           // AKTIF! Layar ST7789 lu
     #define HAS_MINI_SCREEN      // AKTIF! Set ukuran teks pas di layar kecil
-    #define HAS_SD               // AKTIF! Fitur SD Card tambahan yang lu minta
+    #define HAS_SD               // AKTIF! Fitur SD Card tambahan untuk simpan pcap
   #endif
   //// END BOARD FEATURES
 
@@ -80,11 +80,11 @@
   //// BUTTON DEFINITIONS
   #ifdef HAS_BUTTONS
     #ifdef GENERIC_ESP32
-      // Pengaturan Pin Navigasi (Silahkan disolder sesuai nomor GPIO ini)
+      // Pengaturan Pin Navigasi (Sesuai dengan skema wiring aman eksternal pull-down)
       #define L_BTN 12   // Tombol Kiri (Fungsi: BACK)
-      #define C_BTN 0    // Tombol Tengah (Fungsi: SELECT/ENTER -> Pakai pin tombol Boot bawaan)
+      #define C_BTN 13   // Tombol Tengah (Fungsi: SELECT/ENTER - Aman untuk booting)
       #define U_BTN 14   // Tombol Atas (Fungsi: UP)
-      #define R_BTN -1   // Dimatikan karena tombol lu cuma ada 4
+      #define R_BTN -1   // Dimatikan karena tombol fisik lu cuma ada 4
       #define D_BTN 27   // Tombol Bawah (Fungsi: DOWN)
 
       #define HAS_L
@@ -92,9 +92,9 @@
       #define HAS_D
       #define HAS_C
 
-      // Logika resistor pull-down eksternal 10k lu (Ditekan = HIGH / false)
+      // Semua set ke false karena menggunakan rangkaian resistor pull-down 10k eksternal (Ditekan = HIGH)
       #define L_PULL false
-      #define C_PULL true  // Pin 0 pakai internal pull-up bawaan board ESP32
+      #define C_PULL false
       #define U_PULL false
       #define R_PULL false
       #define D_PULL false
@@ -118,7 +118,7 @@
 
       #define GRAPH_VERT_LIM TFT_HEIGHT/2 - 1
       #define EXT_BUTTON_WIDTH 0
-      #define SCREEN_ORIENTATION 0 // Jika layar kebalik, ganti angka ini (0-3) nanti
+      #define SCREEN_ORIENTATION 0 // Jika layar terbalik pas menyala, ganti angka ini (0-3) nanti
 
       #define CHAR_WIDTH 6
       #define SCREEN_WIDTH TFT_WIDTH
@@ -161,7 +161,7 @@
   //// SD CARD CONFIGURATION
   #ifdef HAS_SD
     #ifdef GENERIC_ESP32
-      #define SD_CS 4            // Pin Chip Select (CS) untuk modul SD Card lu
+      #define SD_CS 15           // Pin Chip Select (CS) SD Card dipindah ke GPIO 15 biar gak bentrok
     #endif
   #endif
   //// END SD CARD CONFIGURATION
